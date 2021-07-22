@@ -24,6 +24,18 @@ public class PageController {
 	@Autowired
 	private IrankiaiKlientaiRepository irankiai_klientai_repository;
 	
+	@Autowired 
+	EntityManagerFactory factory;	
+	
+	public SessionFactory sessionFactory() {
+
+		
+        if (factory.unwrap(SessionFactory.class) == null) {
+            throw new NullPointerException("factory is not a hibernate factory");
+        }
+        return factory.unwrap(SessionFactory.class);
+}	
+	
 	@RequestMapping(path="/", method={ RequestMethod.GET, RequestMethod.POST })
 	public String nuoma(@RequestParam(name="inventoriaus_numeris", required=true, defaultValue="-") String inventoriaus_numeris,
 						 @RequestParam(name="pavadinimas", required=true, defaultValue="-") String pavadinimas,
